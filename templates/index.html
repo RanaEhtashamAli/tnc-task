@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exchange Rate BTC/USD</title>
+</head>
+<body>
+<h3>Live BTC/USD exchange rate.</h3>
+<div id="rates_div">
+	
+</div>
+<script>
+    var socket = new WebSocket('ws://localhost:8000/ws/tnc/');
+
+    socket.onmessage = function (event){
+        var data = JSON.parse(event.data);
+        var rates_div = document.getElementById("rates_div");
+        var para = document.createElement("p");
+    	var node = document.createTextNode("Exchange Rate: "+data["exchange_rate"]+" Bid Price: "+data["bid_price"]+" Ask Price: "+data["ask_price"]+" TimeStamp: "+data["last_refreshed"]);
+    	para.appendChild(node);
+    	rates_div.insertBefore(para, rates_div.firstChild);
+    }
+</script>
+</body>
+</html>
